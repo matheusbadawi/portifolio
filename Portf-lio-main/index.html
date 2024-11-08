@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Programador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: #fdfdfd;
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 200vh;
+            margin: 0;
+            overflow: auto;
+            text-align: center;
+            font-size: 12px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .contact-info {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .projects {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .project {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+            width: 400px;
+        }
+        .project img {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .project:hover {
+            background-color: #ffffff;
+            color: black;
+        }
+        .scroll-down {
+            position: fixed;
+            bottom: 20px;
+            font-size: 14px;
+            animation: scroll 2s infinite;
+        }
+        @keyframes scroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+        /* Estilo do Pop-up */
+        .popup {
+            display: none; /* Inicialmente escondido */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000; /* Fica acima de outros elementos */
+        }
+        .popup h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .popup button {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .popup button:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .overlay {
+            display: none; /* Inicialmente escondido */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999; /* Fica atrás do pop-up */
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-music" loop>
+        <source src="audio/background-music.m4a" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+    
+    <audio id="button-sound">
+        <source src="audio/click.m4a" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <script>
+        window.onload = function() {
+            addClickListeners(); // Adiciona ouvintes de eventos
+            showPopup(); // Mostra o pop-up
+        };
+
+        function playSound() {
+            var sound = document.getElementById("button-sound");
+            sound.currentTime = 0; // Reinicia o som
+            sound.play();
+        }
+
+        function playBackgroundMusic() {
+            const music = document.getElementById("background-music");
+            music.volume = 0.7; // Define o volume para 50% (ajuste conforme necessário)
+            music.play().catch(error => {
+                console.log("Erro ao tentar reproduzir a música:", error);
+            });
+        }
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block"; // Mostra a sobreposição
+        }
+
+        function activateMusic() {
+            playBackgroundMusic(); // Toca a música de fundo
+            closePopup();
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none"; // Esconde a sobreposição
+        }
+
+        function addClickListeners() {
+            var projectLinks = document.querySelectorAll('.project');
+            projectLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    playSound();
+                    // Não precisa tocar a música de fundo aqui, pois já é ativada no pop-up
+                });
+            });
+        }
+    </script>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Deseja ativar a música de fundo?</h2>
+        <button onclick="activateMusic()">Sim</button>
+        <button onclick="closePopup()">Não</button>
+    </div>
+
+    <div class="contact-info">
+        <div>Contato: (41) 984990684</div>
+        <div><a href="https://www.instagram.com/seu_perfil" target="_blank" style="color: #f7faf7; text-decoration: none;">@Matheushbdw</a></div>
+    </div>
+    
+    <div class="projects">
+        <h1>Meus Projetos</h1>
+        <a class="project" href="link_do_projeto_man" target="_blank">
+            <img src="horse.jpeg" alt="Horse-Supliments">
+            Horse Supliments
+        </a>
+        <a class="project" href="https://marcelolind0.github.io/BADAWI/" target="_blank">
+            <img src="badawi.jpg" alt="Badawis Quizzez">
+            Badawi-organic-quiz
+        </a>
+        <a class="project" href="https://eduardochiodinisil.wixsite.com/ross-tratores" target="_blank">
+            <img src="ross.jpg" alt="Ross Tratores">
+            Ross Tratores
+        </a>
+        <a class="project" href="https://miraiyoukaii.github.io/Badawi-Termo-quiz/" target="_blank">
+            <img src="badawi.jpg" alt="Badawi Termo Química">
+            Badawi Termo Química
+        </a>
+    </div>
+    <div class="scroll-down">▼</div>
+</body>
+</html>
